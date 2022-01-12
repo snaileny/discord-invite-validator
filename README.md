@@ -1,2 +1,2 @@
-# discord-invite-generator
-Generates Discord invites from input and checks if they are valid or not.
+# discord-invite-validator
+Simple script and UI to check if the Discord links provided are valid.
