@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const buttonReset = document.querySelector("#reset-button");
         const tableBody = document.querySelector("#output-table-body");
 
-        //NOTE: apperantly, global flag changes the behavior of regex.test or regex.exec methods (look up regexp lastIndex)
+        //NOTE: apparently, global flag changes the behavior of regex.test or regex.exec methods (look up regexp lastIndex)
         const linkRegex = /^(https:\/\/)?(www\.)?(discord)(\.com\/invite\/[A-Za-z0-9]+|\.gg\/[A-Za-z0-9]+)$/;
         const whiteSpaceRegex = /\s+/g
         const httpsRegex = /https:\/\//;
