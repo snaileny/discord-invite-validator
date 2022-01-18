@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link href="./css/index.css" rel="stylesheet">
+    <script src="js/index.js" defer></script>
+    <title>Discord Invite Generator</title>
+</head>
+<body>
+    <div class="main-container">
+        <div class="header-container">
+            <h1 class="header-title">Discord Invite Validator</h1>
+            <p class="header-info">Generate invite links from input or validate existing invites</p>
+        </div>
+        <div class="content-container">
+            <div class="input-container">
+                <div class="input-group">
+                    <label class="input-info" for="input-textarea">Input your invite links seperated with commas:</label>
+                    <textarea id="input-textarea" name="input-textarea" rows="8" cols="48" placeholder="e.g. discord.gg/pjqpRn6 or pjqpRn6"></textarea>
+                </div>
+                <div class="button-group">
+                    <button id="validate-button">Validate</button>
+                    <button id="reset-button">Reset All</button>
+                </div>
+            </div>
+            <div class="output-container">
+                <table class="output-table">
+                    <thead>
+                        <tr>
+                            <th>Link</th>
+                            <th>Is Valid</th>
+                        </tr>
+                    </thead>
+                    <tbody id="output-table-body">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
