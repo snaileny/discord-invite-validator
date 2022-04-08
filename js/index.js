@@ -124,20 +124,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
                             }
 
-                        });
+                            return invitesObject;
+
+                        }).then(createTemplate(invitesObject));
     
                 }
 
             }
 
-            return invitesObject;
+            
 
         }
 
-        function createTemplate() {
+        function createTemplate(invitesObject) {
 
-            const invitesObject = validateInvite();
-            console.log(invitesObject)
             const inviteLinkArray = [...invitesObject["inviteLinks"]];
             const inviteStatusArray = [...invitesObject["inviteStatus"]];
 
