@@ -17,15 +17,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
         function init() {
 
-            buttonValidate.addEventListener("click", () => {
+            buttonValidate.addEventListener("click", (e) => {
 
-                createTemplate();
+                validateInvites();   
+                e.preventDefault();
 
             });
 
-            buttonReset.addEventListener("click", () => {
+            buttonReset.addEventListener("click", (e) => {
 
                 resetContent(); 
+                e.preventDefault();
 
             });
 
@@ -94,77 +96,72 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-        function validateInvite() {
+        function validateInvites() {
 
-            const inputArray = parseTextAreaInput();
-            const inviteLinkArray = [];
-            const inviteStatusArray = [];
-            const invitesObject = {inviteLinks: inviteLinkArray, inviteStatus: inviteStatusArray};
+            const inviteArray = parseTextAreaInput();
 
-            if (inputArray) {
+            for (let invite of inviteArray) {
 
-                for (let link of inputArray) {
-
-                    const inviteCode = link.match(inviteRegex)[0].slice(1);
-
-                    
-                    fetch(`https://discordapp.com/api/invite/${inviteCode}`)
-                        .then(res => res.json())
-                        .then(json => {
-                            
-                            if (json.message !== "Unknown Invite") {
-
-                                inviteLinkArray.push(link);
-                                inviteStatusArray.push(true);
-
-                            } else {
-
-                                inviteLinkArray.push(link);
-                                inviteStatusArray.push(false);
-
-                            }
-
-                            return invitesObject;
-
-                        }).then(createTemplate(invitesObject));
-    
-                }
+                fetchInvite(invite);
 
             }
 
-            
+        }
+
+        function fetchInvite(invite) {
+
+            const inviteObject = {link: null, status: null};
+
+            if (invite) {
+
+                const inviteCode = invite.match(inviteRegex)[0].slice(1);
+
+                fetch(`https://discordapp.com/api/invite/${inviteCode}`)
+                    .then(res => res.json())
+                    .then(json => {
+                            
+                        if (json.message !== "Unknown Invite") {
+
+                            inviteObject.link = invite;
+                            inviteObject.status = true;
+
+                        } else {
+
+                            inviteObject.link = invite;
+                            inviteObject.status = false;
+
+                        }
+
+                        return inviteObject;
+
+                    })
+                    .then((obj) => {createTemplate(obj);})
+                    .catch();
+
+            }
 
         }
 
-        function createTemplate(invitesObject) {
+        function createTemplate(inviteObject) {
 
-            const inviteLinkArray = [...invitesObject["inviteLinks"]];
-            const inviteStatusArray = [...invitesObject["inviteStatus"]];
-
-            if (inviteLinkArray) {
+            if (inviteObject) {
  
-                console.log(invitesObject['inviteLinks'][0]); 
-
-                for (let link of inviteLinkArray) {
-
-                    const newRow = document.createElement("tr");
+                const newRow = document.createElement("tr");
     
-                    const template = `
-                        <td>
-                            <a href="${link}" target="_blank" rel="noopener noreferrer">
-                            ${link}
-                            </a>
-                        </td>
-                        <td>
-                            <span class="${inviteStatusArray[inviteLinkArray.indexOf(link)] === true ? "valid" : "not-valid"}">${inviteStatusArray[inviteLinkArray.indexOf(link)] === true ? "Valid" : "Not Valid"}</span>
-                        </td>
-                    `;
+                const template = `
+                    <td>
+                        <a href="${inviteObject.link}" target="_blank" rel="noopener noreferrer">
+                        ${inviteObject.link}
+                        </a>
+                    </td>
+                    <td>
+                        <span class="${inviteObject.status === true ? "valid" : "not-valid"}">${inviteObject.status === true ? "Valid" : "Not Valid"}</span>
+                    </td>
+                `;
 
-                    newRow.innerHTML = template;
-                    tableBody.appendChild(newRow);
+                newRow.innerHTML = template;
+                tableBody.appendChild(newRow);
     
-                }
-
             }
 
         }
