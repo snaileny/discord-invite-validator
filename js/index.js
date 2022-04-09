@@ -136,7 +136,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     })
                     .then((obj) => {createTemplate(obj);})
-                    .catch(() => {alert(err)});
+                    .catch((err) => {alert(err)});
 
             }
 
